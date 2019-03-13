@@ -1,5 +1,3 @@
-// +build OMIT
-
 // Package google provides a function to do Google searches using the Google Web
 // Search API. See https://developers.google.com/web-search/docs/
 //

@@ -1,5 +1,3 @@
-// +build OMIT
-
 // The server program issues Google search requests and demonstrates the use of
 // the go.net Context API. It serves on port 8080.
 //
@@ -62,7 +60,23 @@ func handleSearch(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	ctx = userip.NewContext(ctx, userIP)
+	ctx2 := userip.NewContext(ctx, userIP)
+	// ctx2 context.Context interface
+	//   (type: context.valueCtx struct)
+	//   (parent)
+	//   Context
+	//     (struct: context.timerCtx)
+	//     (parent, == ctx)
+	//     cancelCtx
+	//       (type: context.cancelCtx struct)
+	//       Context
+	//         (type: context.emptyCtx int)
+	//       ...
+	//     *timer
+	//     deadline
+	//   key : userIPKey
+	//   val : ::1 or 127.0.0.1
+	ctx = ctx2
 
 	// Run the Google search and print the results.
 	start := time.Now()
